@@ -1,0 +1,30 @@
+// Defines compact FlatBuffer types for Event Cameras
+
+namespace EventCam;
+
+
+struct ChangeEvent {
+    /// time in seconds since some reference
+    time: float64;
+    /// pixel location column
+    x: uint16;
+    /// pixel location row
+    y: uint16;
+    /// polarity of the change
+    polarity:int8;
+}
+
+/// FrameData groups an arbitrary number of change events 
+table FrameData {
+    /// vector of events included in this frame
+    events: [ChangeEvent];
+    /// the count of rising edge events included in this frame
+    rising_count: uint32;
+    /// the count of falling edge events included in this frame
+    falling_count: uint32;
+}
+
+// compile this schema using:
+// flatc --rust  -o src  dvs_event.fbs
+// flatc --python dvs_event.fbs
+
